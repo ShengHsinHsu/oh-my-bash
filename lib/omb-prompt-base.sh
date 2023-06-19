@@ -83,8 +83,8 @@ CHRUBY_THEME_PROMPT_SUFFIX='|'
 # deprecate
 VIRTUALENV_THEME_PROMPT_PREFIX=' |'
 VIRTUALENV_THEME_PROMPT_SUFFIX='|'
-CONDAENV_THEME_PROMPT_PREFIX=' |'
-CONDAENV_THEME_PROMPT_SUFFIX='|'
+CONDAENV_THEME_PROMPT_PREFIX='('
+CONDAENV_THEME_PROMPT_SUFFIX=')'
 PYTHON_THEME_PROMPT_PREFIX=' |'
 PYTHON_THEME_PROMPT_SUFFIX='|'
 
@@ -461,12 +461,15 @@ function _omb_prompt_get_virtualenv {
 }
 
 function _omb_prompt_get_condaenv {
-  condaenv=
-  [[ ${CONDA_DEFAULT_ENV-} && ${CONDA_SHLVL-} != 0 ]] || return 1
+  # condaenv=
+  # [[ ${CONDA_DEFAULT_ENV-} && ${CONDA_SHLVL-} != 0 ]] || return 1
 
   condaenv=$CONDA_DEFAULT_ENV
   if [[ ${OMB_PROMPT_CONDAENV_USE_BASENAME-} == true ]]; then
+    # echo "True Basename is set"
     condaenv=$(basename "$condaenv")
+  else
+    condaenv="default"
   fi
   _omb_prompt_format condaenv "$condaenv" OMB_PROMPT_CONDAENV:CONDAENV_THEME_PROMPT
 }
